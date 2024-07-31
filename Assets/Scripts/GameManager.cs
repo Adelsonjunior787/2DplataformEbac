@@ -1,18 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Ebac.Core.Singleton;
+using DG.Tweening;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager Instance;
+    [Header("Player")]
+    public GameObject playerPrefabs;
 
-    private void Awake()
+    [Header("Enemies")]
+    public List<GameObject> Enemies;
+
+    [Header("References")]
+    public Transform StartPoint;
+
+    [Header("Animations")]
+    public float duration = .2f;
+    public float delay = .05f;
+    public Ease ease = Ease.OutBack;
+
+
+    private GameObject _CurrentPlayer;
+
+    public void Start()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
+        Init();
     }
 
+    public void Init()
+    {
+        SpawPlayer();
+    }
 
+    private void SpawPlayer()
+    {
+        _CurrentPlayer = Instantiate(playerPrefabs);
+        _CurrentPlayer.transform.position = StartPoint.transform.position;
+        _CurrentPlayer.transform.DOScale(0, duration).SetEase(ease).From();
+    }
 }
