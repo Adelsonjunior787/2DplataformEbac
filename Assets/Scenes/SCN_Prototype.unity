@@ -641,6 +641,7 @@ MonoBehaviour:
   Friction: {x: -1, y: 0}
   Speed: 7
   forceJump: 7
+  SpeedRun: 10
 --- !u!50 &1921464627
 Rigidbody2D:
   serializedVersion: 4
