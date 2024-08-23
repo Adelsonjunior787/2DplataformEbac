@@ -12,6 +12,10 @@ public class Astronaut : MonoBehaviour
 
     public float forceJump = 5;
 
+    public float SpeedRun;
+
+    private float _currentSpeed;
+
     private void Update()
     {
         HandleJump();
@@ -20,14 +24,19 @@ public class Astronaut : MonoBehaviour
 
     private void HandleMoviment()
     {
+        if (Input.GetKey(KeyCode.LeftShift))
+            _currentSpeed = SpeedRun;
+        else
+            _currentSpeed = Speed;
+
         if (Input.GetKey(KeyCode.A))
         {
-            MyRigdbody.velocity = new Vector2(-Speed, MyRigdbody.velocity.y);
+            MyRigdbody.velocity = new Vector2(-_currentSpeed, MyRigdbody.velocity.y);
 
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            MyRigdbody.velocity = new Vector2(Speed, MyRigdbody.velocity.y);
+            MyRigdbody.velocity = new Vector2(_currentSpeed, MyRigdbody.velocity.y);
         }
 
         if (MyRigdbody.velocity.x > 0)
@@ -37,7 +46,7 @@ public class Astronaut : MonoBehaviour
         else if(MyRigdbody.velocity.x < 0)
         {
             MyRigdbody.velocity -= Friction;
-        }
+        }      
     }
 
     private void HandleJump()
@@ -45,4 +54,6 @@ public class Astronaut : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             MyRigdbody.velocity = Vector2.up * forceJump;
     }
+
+
 }
